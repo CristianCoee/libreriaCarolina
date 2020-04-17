@@ -5,6 +5,8 @@
  */
 package libreriacarolina;
 
+import formularios.frmEntrada;
+
 /**
  *
  * @author linke
@@ -17,6 +19,10 @@ public class LibreriaCarolina {
     public static void main(String[] args) {
          Conexion BD = new Conexion ();
       BD.conexion();
+      frmEntrada llamada = new frmEntrada ();
+      llamada.setVisible(true);
+      
+      
     }
     
 }
