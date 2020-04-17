@@ -16,6 +16,7 @@ public class frmMenuAdmin extends javax.swing.JFrame {
      */
     public frmMenuAdmin() {
         initComponents();
+         setLocationRelativeTo(null);
     }
 
     /**

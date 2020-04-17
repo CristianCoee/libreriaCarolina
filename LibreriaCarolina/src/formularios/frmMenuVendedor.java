@@ -16,6 +16,7 @@ public class frmMenuVendedor extends javax.swing.JFrame {
      */
     public frmMenuVendedor() {
         initComponents();
+         setLocationRelativeTo(null);
         txtAreaAdministrador.setEnabled(false);
         txtProveedor.setEnabled(false);
         txtPedido.setEnabled(false);
