@@ -61,7 +61,7 @@ public class frmProducto extends javax.swing.JInternalFrame {
         lblNombre.setText("Codigo Categoria:");
 
         lblID.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblID.setText("DUI:");
+        lblID.setText("Nombre Producto:");
 
         lblCorreo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblCorreo.setText("Correo:");
