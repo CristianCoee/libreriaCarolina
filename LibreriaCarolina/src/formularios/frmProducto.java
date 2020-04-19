@@ -5,18 +5,24 @@
  */
 package formularios;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import libreriacarolina.Conexion;
+
 /**
  *
  * @author Gabbo09
  */
 public class frmProducto extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmProducto
-     */
     public frmProducto() {
         initComponents();
         this.setTitle("Producto");
+
     }
 
     /**
@@ -41,14 +47,14 @@ public class frmProducto extends javax.swing.JInternalFrame {
         lblCargo = new javax.swing.JLabel();
         lblRol = new javax.swing.JLabel();
         txtcodproducto = new javax.swing.JTextField();
-        txtID = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtNombres = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        txtnomproducto = new javax.swing.JTextField();
+        txtpreciocompra = new javax.swing.JTextField();
+        txtprecioventa = new javax.swing.JTextField();
+        txtcategoria = new javax.swing.JTextField();
+        txtexistencia = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtnumlote = new javax.swing.JTextField();
         lblRol1 = new javax.swing.JLabel();
         lblRol2 = new javax.swing.JLabel();
         lblRol3 = new javax.swing.JLabel();
@@ -98,17 +104,17 @@ public class frmProducto extends javax.swing.JInternalFrame {
 
         txtcodproducto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 
-        txtID.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtnomproducto.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        txtCorreo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtCorreo.setText("0.00");
+        txtpreciocompra.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtpreciocompra.setText("0.00");
 
-        txtTelefono.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txtTelefono.setText("0.00");
+        txtprecioventa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtprecioventa.setText("0.00");
 
-        txtNombres.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtcategoria.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtexistencia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
@@ -117,8 +123,13 @@ public class frmProducto extends javax.swing.JInternalFrame {
         btnGuardar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__save.png"))); // NOI18N
         btnGuardar.setText("GUARDAR");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtnumlote.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         lblRol1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblRol1.setText("$");
@@ -164,13 +175,13 @@ public class frmProducto extends javax.swing.JInternalFrame {
                             .addComponent(txtcodproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                    .addComponent(txtID)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtcategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(txtnomproducto)
+                                    .addComponent(txtpreciocompra, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtprecioventa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)))))
+                                    .addComponent(txtnumlote, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                    .addComponent(txtexistencia, javax.swing.GroupLayout.Alignment.LEADING)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,30 +204,30 @@ public class frmProducto extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
-                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtcategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblID)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnomproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtpreciocompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCorreo)
                     .addComponent(lblRol))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtprecioventa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTelefono)
                     .addComponent(lblRol1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFechNacimiento)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtexistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRol2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCargo)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnumlote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRol3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -254,6 +265,11 @@ public class frmProducto extends javax.swing.JInternalFrame {
         btnModificar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
         btnModificar.setText("MODIFICAR");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/trash_full_recycle_delete_delete_9751.png"))); // NOI18N
@@ -346,6 +362,39 @@ public class frmProducto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //Creacion de la conexion...
+        Conexion coneccion = new Conexion();
+        Connection con = coneccion.conexion();
+        //Creacion de variable...
+        String codProducto = this.txtcodproducto.getText();
+        String codCategoria = this.txtcategoria.getText();
+        String nomProducto = this.txtnomproducto.getText();
+        String precioCompra = this.txtpreciocompra.getText();
+        String precioVenta = this.txtprecioventa.getText();
+        String existencia = this.txtexistencia.getText();
+        String numLotes = this.txtnumlote.getText();
+ 
+        //Consulta para guardar los datos de producto...
+        String query = "insert into productos(id_producto,id_categoria,producto,precio_compra,precio_venta,existencia,num_lote) values " + "('" + codProducto + "','"
+                + codCategoria + "','" + nomProducto + "','" + precioVenta + "','" + precioCompra + "','" + existencia + "','" + numLotes + "')";
+        
+        //Se verifica la conexion si todo esta correcto guarda los datos, sino envia un mensaje de error...
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+        } catch (SQLException ex) {
+            
+            JOptionPane.showMessageDialog(null, "Error!, los datos no fueron ingresados\n" + ex);
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -359,8 +408,6 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblBuscarpor;
@@ -374,12 +421,14 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblRol2;
     private javax.swing.JLabel lblRol3;
     private javax.swing.JLabel lblTelefono;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNombres;
     private javax.swing.JLabel txtNuevoEmpleado;
     private javax.swing.JLabel txtNuevoEmpleado1;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtcategoria;
     private javax.swing.JTextField txtcodproducto;
+    private javax.swing.JTextField txtexistencia;
+    private javax.swing.JTextField txtnomproducto;
+    private javax.swing.JTextField txtnumlote;
+    private javax.swing.JTextField txtpreciocompra;
+    private javax.swing.JTextField txtprecioventa;
     // End of variables declaration//GEN-END:variables
 }
