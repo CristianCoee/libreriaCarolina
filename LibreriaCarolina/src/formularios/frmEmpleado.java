@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import libreriacarolina.Conexion;
 
 /**
@@ -19,6 +20,7 @@ import libreriacarolina.Conexion;
  */
 public class frmEmpleado extends javax.swing.JInternalFrame {
 Connection conn ;
+DefaultTableModel model;
     /**
      * Creates new form frmEmpleado
      */
@@ -33,6 +35,7 @@ Connection conn ;
         }
         catch(Exception e) {}
            llenarCargo();
+           consultar("");
     }
   public void llenarCargo(){
         
@@ -54,10 +57,39 @@ Connection conn ;
             JOptionPane.showMessageDialog(null,"Ha ocurrido un error: "+e.toString(),
                 "Error", JOptionPane.ERROR_MESSAGE);     
         }
-        
-        
-        
+      
     }
+    private void consultar(String valor){
+     String query = "";
+     if(valor.equals("")){
+         query="select * from empleados" ;
+     }
+     else{
+         query="select * from empleados where nombre='"+valor+"'" ; 
+     }
+     
+ try {
+          Statement stmt = conn.createStatement();
+          ResultSet rs = stmt.executeQuery(query) ;
+          model = (DefaultTableModel) this.jTable1.getModel();
+          model.setRowCount(0);
+          Object Datos[]= new Object[8];
+          
+          while (rs.next())
+           {
+              for (int i=0;i<8;i++) Datos[i]=rs.getObject(i+1);
+              model.addRow(Datos);
+           }
+           this.jTable1.setModel(model);
+          
+        }
+        catch(Exception e) 
+        {
+            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
+                "Error", JOptionPane.ERROR_MESSAGE);          
+        }
+
+ }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,7 +108,7 @@ Connection conn ;
         lblTelefono = new javax.swing.JLabel();
         lblFechNacimiento = new javax.swing.JLabel();
         lblCargo = new javax.swing.JLabel();
-        lblRol = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
         txtApellido = new javax.swing.JTextField();
         txtID = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
@@ -84,10 +116,12 @@ Connection conn ;
         txtNombres = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        txtUsuario = new javax.swing.JTextField();
+        lblContraseña = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         lblBuscarpor = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
@@ -136,9 +170,9 @@ Connection conn ;
         lblCargo.setText("Cargo:");
         jPanel1.add(lblCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
-        lblRol.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblRol.setText("Rol:");
-        jPanel1.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        lblUsuario.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblUsuario.setText("Usuario:");
+        jPanel1.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         txtApellido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 220, -1));
@@ -162,10 +196,6 @@ Connection conn ;
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE CARGO" }));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 206, -1));
 
-        jComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE ROL" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 206, -1));
-
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
@@ -188,6 +218,14 @@ Connection conn ;
             }
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 40, 30));
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 220, -1));
+
+        lblContraseña.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblContraseña.setText("Contraseña:");
+        jPanel1.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+
+        jPasswordField1.setText("jPasswordField1");
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, -1));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
@@ -196,7 +234,7 @@ Connection conn ;
         lblBuscarpor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblBuscarpor.setText("Buscar por: ");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE UNA OPCION ", "APELLIDOS", "NOMBRES", "DUI", "USUARIO" }));
 
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/search_find_client_user_16693.png"))); // NOI18N
@@ -230,11 +268,11 @@ Connection conn ;
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(26, 26, 26)
                 .addComponent(lblBuscarpor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
@@ -341,22 +379,23 @@ Connection conn ;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblBuscarpor;
     private javax.swing.JLabel lblCargo;
+    private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblFechNacimiento;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblRol;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblUsuario;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCorreo;
@@ -364,5 +403,6 @@ Connection conn ;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JLabel txtNuevoEmpleado;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
