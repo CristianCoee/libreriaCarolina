@@ -60,6 +60,8 @@ public class frmProducto extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         txtNuevoEmpleado = new javax.swing.JLabel();
 
+        setTitle("Producto");
+
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -260,8 +262,8 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         try
         {
-            String query = " insert into contraseña (id_producto, id_categoria,producto,precio_compra, precio_venta, existencia, num_lote )"
-            + " values (?, ?, ?, ?, ?, ?)";
+            String query = " insert into Productos (id_producto, id_categoria,producto,precio_compra, precio_venta, existencia, num_lote )"
+            + " values (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pst = conn.prepareStatement(query);
 
