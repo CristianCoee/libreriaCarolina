@@ -151,7 +151,7 @@ private class hilo extends Thread{
                 case 60:
                     frmLogin objeto = new frmLogin();
                     objeto.setVisible(true);
-                    objeto.setLocationRelativeTo(frmEntrada.this);
+
                     frmEntrada.this.dispose();
                     break;                    
             }
