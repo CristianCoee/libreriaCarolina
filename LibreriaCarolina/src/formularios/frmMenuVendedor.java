@@ -5,12 +5,17 @@
  */
 package formularios;
 
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+import libreriacarolina.ImagenFondo;
+
 /**
  *
  * @author linke
  */
 public class frmMenuVendedor extends javax.swing.JFrame {
-
+public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.jpg");
     /**
      * Creates new form frmMenuAdmin
      */
@@ -21,7 +26,17 @@ public class frmMenuVendedor extends javax.swing.JFrame {
         txtProveedor.setEnabled(false);
         txtPedido.setEnabled(false);
         txtEmpleados.setEnabled(false);
+        cargarImagen (Escritorio, logo);
     }
+    
+    public void cargarImagen (javax.swing.JDesktopPane jDeskp, InputStream fileImage){
+    try{
+    BufferedImage image = ImageIO.read(fileImage);
+    Escritorio.setBorder(new ImagenFondo (image));
+}catch (Exception e){
+    System.out.println("Imagen no disponible");
+
+}}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,6 +61,7 @@ public class frmMenuVendedor extends javax.swing.JFrame {
         txtPedido = new javax.swing.JButton();
         txtEmpleados = new javax.swing.JButton();
         txtCerrarSesion = new javax.swing.JButton();
+        Escritorio = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -107,11 +123,21 @@ public class frmMenuVendedor extends javax.swing.JFrame {
         txtProducto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/stuffitboxproduct_stuffit_caj_2624.png"))); // NOI18N
         txtProducto.setText("Producto");
+        txtProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductoActionPerformed(evt);
+            }
+        });
 
         txtVenta.setBackground(new java.awt.Color(255, 255, 255));
         txtVenta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/shoppaymentorderbuy-29_icon-icons.com_73875.png"))); // NOI18N
         txtVenta.setText("Venta");
+        txtVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVentaActionPerformed(evt);
+            }
+        });
 
         txtAreaAdministrador.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txtAreaAdministrador.setText("Area administrador");
@@ -188,6 +214,19 @@ public class frmMenuVendedor extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        Escritorio.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,14 +234,18 @@ public class frmMenuVendedor extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Escritorio)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Escritorio))
                 .addContainerGap())
         );
 
@@ -210,12 +253,26 @@ public class frmMenuVendedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        // TODO add your handling code here:
+        frmClientes llamar = new frmClientes();
+        Escritorio.add(llamar);
+        llamar.show();
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void txtPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPedidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPedidoActionPerformed
+
+    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
+       frmVentas llamar = new frmVentas ();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtVentaActionPerformed
+
+    private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
+       frmProducto llamar = new frmProducto();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtProductoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,6 +311,7 @@ public class frmMenuVendedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JButton btnCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import libreriacarolina.Conexion;
@@ -36,6 +39,9 @@ DefaultTableModel model;
         catch(Exception e) {}
            llenarCargo();
            consultar("");
+           jPasswordField1.setText("");
+          
+           lblID_usuario.setVisible(false);
     }
   public void llenarCargo(){
         
@@ -62,10 +68,10 @@ DefaultTableModel model;
     private void consultar(String valor){
      String query = "";
      if(valor.equals("")){
-         query="select * from empleados" ;
+         query="select DISTINCT id_empleado, nombres, apellidos, fecha_nac, direccion, correo,telefono, cargos.cargo, roles.usuario from empleados inner join cargos on empleados.id_cargo = cargos.id_cargo left JOIN roles on empleados.id_rol = roles.id_rol" ;
      }
      else{
-         query="select * from empleados where nombre='"+valor+"'" ; 
+         query="select DISTINCT id_empleado, nombres, apellidos, fecha_nac, direccion, correo,telefono, cargos.cargo, roles.usuario from empleados inner join cargos on empleados.id_cargo = cargos.id_cargo left JOIN roles on empleados.id_rol = roles.id_rol where nombre='"+valor+"'" ; 
      }
      
  try {
@@ -73,11 +79,11 @@ DefaultTableModel model;
           ResultSet rs = stmt.executeQuery(query) ;
           model = (DefaultTableModel) this.jTable1.getModel();
           model.setRowCount(0);
-          Object Datos[]= new Object[8];
+          Object Datos[]= new Object[9];
           
           while (rs.next())
            {
-              for (int i=0;i<8;i++) Datos[i]=rs.getObject(i+1);
+              for (int i=0;i<9;i++) Datos[i]=rs.getObject(i+1);
               model.addRow(Datos);
            }
            this.jTable1.setModel(model);
@@ -90,6 +96,28 @@ DefaultTableModel model;
         }
 
  }
+    public void usuario (){
+        String query="";
+        query="SELECT count(id_rol) FROM roles";
+        try { 
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query) ;
+         Object Datos[]= new Object[1];
+         while (rs.next())
+           { 
+         for (int i=0;i<1;i++){  Datos[i]=rs.getObject(i+1);
+         this.lblID_usuario.setVisible(true);
+         this.lblID_usuario.setText(""+Datos[i]);
+         System.out.print(Datos);
+           } }
+          }
+        catch(Exception e) 
+        {
+            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
+                "Error", JOptionPane.ERROR_MESSAGE);          
+        }
+    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,10 +146,13 @@ DefaultTableModel model;
         jComboBox1 = new javax.swing.JComboBox<>();
         btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         lblContraseña = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
+        lblDireccion = new javax.swing.JLabel();
+        txtDireccion = new javax.swing.JTextField();
+        Comprobar = new javax.swing.JCheckBox();
+        lblID_usuario = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblBuscarpor = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
@@ -164,15 +195,15 @@ DefaultTableModel model;
 
         lblFechNacimiento.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblFechNacimiento.setText("Fecha nacimiento:");
-        jPanel1.add(lblFechNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        jPanel1.add(lblFechNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         lblCargo.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblCargo.setText("Cargo:");
-        jPanel1.add(lblCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel1.add(lblCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         lblUsuario.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblUsuario.setText("Usuario:");
-        jPanel1.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        jPanel1.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         txtApellido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 220, -1));
@@ -190,16 +221,16 @@ DefaultTableModel model;
         jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 220, -1));
 
         jTextField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 220, -1));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE CARGO" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 206, -1));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 220, -1));
 
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 379, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, -1, -1));
 
         btnGuardar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__save.png"))); // NOI18N
@@ -209,23 +240,31 @@ DefaultTableModel model;
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 379, 172, 73));
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/1487716858-add-user_81636 (1).png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 40, 30));
-        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 220, -1));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 172, 73));
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, -1));
 
         lblContraseña.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblContraseña.setText("Contraseña:");
-        jPanel1.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        jPanel1.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
 
         jPasswordField1.setText("jPasswordField1");
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, -1));
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 220, -1));
+
+        lblDireccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblDireccion.setText("Dirección:");
+        jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, -1));
+
+        Comprobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComprobarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Comprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+
+        lblID_usuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        lblID_usuario.setText("jLabel1");
+        jPanel1.add(lblID_usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
@@ -244,13 +283,10 @@ DefaultTableModel model;
         jTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "NOMBRE", "APELLIDO", "FECHA DE NACIMIENTO", "DIRECCIÓN", "E-MAIL", "CARGO", "ROL"
+                "ID", "NOMBRE", "APELLIDO", "FECHA DE NACIMIENTO", "DIRECCIÓN", "E-MAIL", "TELEFONO", "CARGO", "ROL"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -262,6 +298,11 @@ DefaultTableModel model;
         btnEliminar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/trash_full_recycle_delete_delete_9751.png"))); // NOI18N
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -311,13 +352,14 @@ DefaultTableModel model;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -329,55 +371,110 @@ DefaultTableModel model;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-         try
+        
+        try
         {
-            String query = " insert into contraseña (id_empleado, apellidos,nombres,correo, telefono, fecha_nac, id_cargo, id_rol  )"
-            + " values (?, ?, ?, ?, ?, ?)";
-
-           PreparedStatement pst = conn.prepareStatement(query);
-           
-            pst.setString(1, this.txtID.getText().trim());
-            pst.setString(2, this.txtApellido.getText().trim());
-            pst.setString(3, this.txtNombres.getText().trim());
-            pst.setString(4, this.txtCorreo.getText().trim());
-            pst.setString(5, this.txtTelefono.getText().trim());
-            pst.setString(6, this.jTextField1.getText().trim());
-           // pst.setString(7, this.txtCorreo.getText().trim());
-            //pst.setString(8, this.txtCorreo.getText().trim());
-           
-                  
-
-            //execute the preparedstatement
-        pst.executeUpdate();
-            //limpiar controles visuales
-            this.txtID.setText("");
-            this.txtApellido.setText("");
-            this.txtNombres.setText("");
-            this.txtCorreo.setText("");
-            this.txtTelefono.setText("");
-            this.jTextField1.setText("");
             
+             String query1= "insert into empleados (id_empleado, nombres, apellidos, telefono, direccion, correo, fecha_nac, id_cargo, id_rol) "
+                    + "values (?,?,?,?,?,?,?,?,?)";
 
+            PreparedStatement pst = conn.prepareStatement(query1);
+
+            pst.setString(1, this.txtID.getText().trim());
+            pst.setString(2, this.txtNombres.getText().trim());
+            pst.setString(3, this.txtApellido.getText().trim());
+            pst.setString(4, this.txtTelefono.getText().trim());
+            pst.setString(5, this.txtDireccion.getText().trim());
+            pst.setString(6, this.txtCorreo.getText().trim());
+            pst.setString(7, this.jTextField1.getText().trim());
+            pst.setString(8, ""+this.jComboBox1.getSelectedIndex());
+            pst.setString(9, this.lblID_usuario.getText().trim());
+             pst.executeUpdate();
+           
+           
+          
+            //limpiar controles visuales
+            this.txtUsuario.setText("");
+            this.jPasswordField1.setText("");
+            
         }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
+        this.consultar ("");
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void ComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprobarActionPerformed
+         try
+        {
+            
+           String query = "insert into roles (usuario, clave)"
+            + " values (?, ?)";
+            
+            PreparedStatement pstt = conn.prepareStatement(query);
+             
+            pstt.setString(1, this.txtUsuario.getText().trim());
+            pstt.setString(2, this.jPasswordField1.getText().trim());
+             
+             pstt.executeUpdate();
+            
+             usuario ();
+          
+             }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+          
+            
+             
+    
+       
+    
+            
+          
+          
+    }//GEN-LAST:event_ComprobarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = jTable1.getSelectedRow();
+        if (fila>=0){
+            String dato="";
+            dato=jTable1.getValueAt(fila, 0).toString();
+            try
+            {
+                String query = "DELETE FROM empleados WHERE id_empleado='"+dato+"'";
+
+                PreparedStatement pst = conn.prepareStatement(query);
+                // execute the preparedstatement
+                pst.executeUpdate();
+
+                // actualizar la tabla
+                this.consultar("");
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Seleccione fila.",
+                "Acción", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox Comprobar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JPanel jPanel1;
@@ -391,14 +488,17 @@ DefaultTableModel model;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblFechNacimiento;
     private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblID_usuario;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JLabel txtNuevoEmpleado;

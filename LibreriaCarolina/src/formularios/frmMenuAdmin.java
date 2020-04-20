@@ -116,11 +116,21 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         txtProducto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/stuffitboxproduct_stuffit_caj_2624.png"))); // NOI18N
         txtProducto.setText("Producto");
+        txtProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProductoActionPerformed(evt);
+            }
+        });
 
         txtVenta.setBackground(new java.awt.Color(255, 255, 255));
         txtVenta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/shoppaymentorderbuy-29_icon-icons.com_73875.png"))); // NOI18N
         txtVenta.setText("Venta");
+        txtVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVentaActionPerformed(evt);
+            }
+        });
 
         txtAreaAdministrador.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txtAreaAdministrador.setText("Area administrador");
@@ -128,6 +138,11 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         txtProveedor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/3592854-add-user-business-man-employee-general-human-member-office_107767.png"))); // NOI18N
         txtProveedor.setText("Proveedor");
+        txtProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProveedorActionPerformed(evt);
+            }
+        });
 
         txtPedido.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         txtPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Ordering_25406.png"))); // NOI18N
@@ -255,11 +270,15 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
-        // TODO add your handling code here:
+       frmClientes llamar = new frmClientes();
+        Escritorio.add(llamar);
+        llamar.show();
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void txtPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPedidoActionPerformed
-        // TODO add your handling code here:
+        frmCompra llamar = new frmCompra ();
+        Escritorio.add(llamar);
+        llamar.show();
     }//GEN-LAST:event_txtPedidoActionPerformed
 
     private void txtEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpleadosActionPerformed
@@ -269,6 +288,24 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         
         
     }//GEN-LAST:event_txtEmpleadosActionPerformed
+
+    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
+        frmVentas llamar = new frmVentas ();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtVentaActionPerformed
+
+    private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
+        frmProducto llamar = new frmProducto();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtProductoActionPerformed
+
+    private void txtProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProveedorActionPerformed
+         frmProveedor llamar = new frmProveedor ();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtProveedorActionPerformed
 
     /**
      * @param args the command line arguments
