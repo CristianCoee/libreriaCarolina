@@ -198,6 +198,12 @@ DefaultTableModel model;
             this.jComboBox1.setSelectedItem(this.jTable1.getValueAt(fila, 7).toString());
             this.txtUsuario.setText(this.jTable1.getValueAt(fila, 8).toString());
             usuario1();
+            btnEliminar.setEnabled(true);
+            btnModificar.setVisible(true);
+            btnCancelar.setVisible(false);
+             btnCancelar1.setVisible(true);
+             btnCancelar1.setEnabled(true); 
+            
        }else {
            JOptionPane.showMessageDialog(null, "Seleccione fila");
        }
@@ -740,8 +746,7 @@ DefaultTableModel model;
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-        char c= evt.getKeyChar();
-        if ((c<'a' || c>'z')&& (c<'A' || c>'Z') )evt.consume();
+      //  String Apellidos=""+this.txtApellido.setText().matches("[-\\w\\.]+@\\w+\\.\\w+");
     }//GEN-LAST:event_txtApellidoKeyTyped
 
 
