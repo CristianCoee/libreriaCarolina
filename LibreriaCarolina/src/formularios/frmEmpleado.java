@@ -112,7 +112,7 @@ DefaultTableModel model;
  }
     public void usuario (){
         String query="";
-        query="SELECT count(id_rol) FROM roles";
+        query="SELECT MAX(id_rol) FROM roles";
         try { 
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery(query) ;
@@ -251,6 +251,21 @@ DefaultTableModel model;
          this.txtCorreo.setText("");
          this.txtUsuario.setText("");
          this.jTextField1.setText("");
+   }
+   public void Limpiar (){
+       this.txtApellido.setText("");
+       this.txtNombres.setText("");
+       this.txtID.setText("");
+       this.txtCorreo.setText("");
+       this.txtDireccion.setText("");
+       this.txtTelefono.setText("");
+       this.jPasswordField1.setText("");
+       this.jComboBox1.setSelectedIndex(0);
+       this.jTextField1.setText("");
+       this.txtUsuario.setText("");
+       this.lblID_usuario.setText(" ");
+       this.lblID_usuario.setVisible(false);
+       this.btnCancelar1.setEnabled(false);
    }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -636,6 +651,7 @@ DefaultTableModel model;
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
         this.consultar ("");
+        Limpiar ();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -664,6 +680,8 @@ DefaultTableModel model;
             JOptionPane.showMessageDialog(null,"Seleccione fila.",
                 "Acción", JOptionPane.WARNING_MESSAGE);
         }
+        Limpiar ();
+        this.btnModificar.setVisible(false);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -677,6 +695,7 @@ DefaultTableModel model;
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         modificar ();
         this.btnModificar.setVisible(false);
+        Limpiar ();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void ComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprobarActionPerformed
@@ -807,6 +826,7 @@ DefaultTableModel model;
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
         Cancelar ();
+       
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
     private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
