@@ -20,14 +20,14 @@ import libreriacarolina.Conexion;
 public class frmLogin extends javax.swing.JFrame {
     
      Connection conn ;
-
+    
     /**
      * Creates new form frmLogin
      */
     public frmLogin() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,44 +121,42 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         String usuario = txtNombre.getText();
+        String usuario = txtNombre.getText();
         String clave = String.valueOf(pwdContra.getPassword());
-
         int resultado=0;
-         String sqlValidar="SELECT * FROM roles WHERE usuario='"+usuario+"' AND clave=('"+clave+"')";
-         
-        try
-        {
-              Class.forName("org.gjt.mm.mysql.Driver") ;
-              conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","") ;
-              System.out.println("CONEXION EXITOSA");
-              Statement stmt = conn.createStatement();
-              ResultSet rs = stmt.executeQuery(sqlValidar);
-              
-              if(rs.next()){
-                resultado=1;
-              }
-              if(resultado==1){        
-
-        JOptionPane.showMessageDialog(null, "Bienvenido\n Has ingresado "
-        + "satisfactoriamente al sistema", "Mensaje de bienvenida",
-        JOptionPane.INFORMATION_MESSAGE);
-
-      
-
-      }else {
-
-        JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
-        + "Por favor ingrese un usuario y/o contraseña correctos", "Acceso denegado",
-        JOptionPane.ERROR_MESSAGE);
-             } 
-        }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Ha ocurrido un error: "+e.toString(),
-                "Error", JOptionPane.ERROR_MESSAGE);     
-        
-        
-        }
+        String sql="select * from roles where usuario='"+usuario+"' and clave=('"+clave+"')";
+            try {
+                Class.forName("org.gjt.mm.mysql.Driver") ;
+                conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","") ;
+                System.out.println("CONEXION EXITOSA");
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                    if(rs.next()){
+                        resultado=1;
+                    } if(resultado==1) {
+                        int num=0;
+                        String tipo = ("Admin");
+                        if(tipo.equals(usuario)){
+                            num=1;
+                        }else{
+                        num=2;
+                        }
+                        if(num==1){
+                            JOptionPane.showMessageDialog(null, "Estimado administrador@ bienvenid@ al sistema de Libreria Carolina");
+                            frmMenuAdmin llamada = new frmMenuAdmin();
+                            llamada.setVisible(true);
+                            }else if(num==2){
+                                JOptionPane.showMessageDialog(null, "Querid@ vendedor/a bienvenid@ al sistema de Libreria Carolina");
+                                frmMenuVendedor llamada = new frmMenuVendedor();
+                                llamada.setVisible(true);
+                            }
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Acceso denegado, verique su usuario o contraseña");
+                    }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Ha ocurrido un error: "+e.toString(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
