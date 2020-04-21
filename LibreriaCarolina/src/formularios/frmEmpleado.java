@@ -112,7 +112,7 @@ DefaultTableModel model;
  }
     public void usuario (){
         String query="";
-        query="SELECT count(id_rol) FROM roles";
+        query="SELECT MAX(id_rol) FROM roles";
         try { 
          Statement stmt = conn.createStatement();
          ResultSet rs = stmt.executeQuery(query) ;
