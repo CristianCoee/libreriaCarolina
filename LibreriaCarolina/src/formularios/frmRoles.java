@@ -35,6 +35,15 @@ DefaultTableModel model;
            
            jPasswordField1.setText("");
             consultar ("");
+            txtNuevoEmpleado.setVisible(false);
+            lblUsuario.setVisible(false);
+            lblUsuario1.setVisible(false);
+            txtUsuario.setVisible(false);
+            lblContraseña.setVisible(false);
+            jPasswordField1.setVisible(false);
+            btnGuardar.setVisible(false);
+            btnCancelar.setVisible(false);
+            btnCancelar1.setVisible(false);
             
     }
 
@@ -49,8 +58,7 @@ DefaultTableModel model;
          query="select DISTINCT  id_rol, usuario, clave from roles" ;
      }
      else{
-         query="select DISTINCT id_rol, usuario, clave from roles"
-                 + "where usuario LIKE '%"+valor+"%' "
+         query="SELECT DISTINCT id_rol, usuario, clave from roles where usuario LIKE '%"+valor+"%'"
                  ; 
      }
      
@@ -78,7 +86,7 @@ DefaultTableModel model;
  }
     public void buscar (String buscar){
        String query = "";
-        query="select id_rol, usuario, clave from roles where usuario ='"+txtBuscar+"' or clave ='"+txtBuscar+"'" ;
+        query="select DISTINCT * from roles where usuario ='"+this.txtBuscar+"'" ;
         try {
           Statement stmt = conn.createStatement();
           ResultSet rs = stmt.executeQuery(query) ;
@@ -107,8 +115,16 @@ DefaultTableModel model;
            this.txtUsuario.setText(this.jTable1.getValueAt(fila, 1).toString());
             this.jPasswordField1.setText(this.jTable1.getValueAt(fila, 2).toString());
            
+            txtNuevoEmpleado.setVisible(true);
+            lblUsuario.setVisible(true);
+            lblUsuario1.setVisible(true);
+            txtUsuario.setVisible(true);
+            lblContraseña.setVisible(true);
+            jPasswordField1.setVisible(true);
+            btnGuardar.setVisible(true);
+            btnCancelar1.setVisible(true);
             
-            
+            btnCancelar.setVisible(true);
        }else {
            JOptionPane.showMessageDialog(null, "Seleccione fila");
        }
@@ -132,6 +148,8 @@ DefaultTableModel model;
         btnCancelar1 = new javax.swing.JButton();
         lblID = new javax.swing.JLabel();
         lblUsuario1 = new javax.swing.JLabel();
+
+        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
@@ -213,6 +231,11 @@ DefaultTableModel model;
         btnCancelar1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
         btnCancelar1.setText("CANCELAR");
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelar1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, -1, 70));
 
         lblID.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -264,11 +287,13 @@ DefaultTableModel model;
                 "Error", JOptionPane.ERROR_MESSAGE); 
    }
        this.consultar ("");
+       this.txtBuscar.setText("");
    
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         seleccionar ();
+        btnCancelar.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -297,11 +322,34 @@ DefaultTableModel model;
             JOptionPane.showMessageDialog(null,"Seleccione fila.",
                 "Acción", JOptionPane.WARNING_MESSAGE);
         }
+        txtNuevoEmpleado.setVisible(false);
+            lblUsuario.setVisible(false);
+            lblUsuario1.setVisible(false);
+            txtUsuario.setVisible(false);
+            lblContraseña.setVisible(false);
+            jPasswordField1.setVisible(false);
+            btnGuardar.setVisible(false);
+            btnCancelar.setVisible(false);
+            btnCancelar1.setVisible(false);
+            lblID.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-       consultar(txtBuscar.getText());
+      consultar(txtBuscar.getText());
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        txtNuevoEmpleado.setVisible(false);
+            lblUsuario.setVisible(false);
+            lblUsuario1.setVisible(false);
+            txtUsuario.setVisible(false);
+            lblContraseña.setVisible(false);
+            jPasswordField1.setVisible(false);
+            btnGuardar.setVisible(false);
+            btnCancelar1.setVisible(false);
+            lblID.setVisible(false);
+            this.txtBuscar.setText("");
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
