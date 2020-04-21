@@ -22,7 +22,7 @@ public class Conexion {
     public Connection conexion() {
         try {
             Class.forName("org.gjt.mm.mysql.Driver");//.newInstance();
-            Conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/libreria", "root", "");
+            Conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","");
             System.out.println("CONEXION EXITOSA");
             //conectar=DriverManager.getConnection("jdbc:mysql://192.168.1.5:3306/personas","luis","");
 

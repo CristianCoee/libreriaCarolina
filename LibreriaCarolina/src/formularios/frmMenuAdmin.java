@@ -23,7 +23,7 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         initComponents();
          setLocationRelativeTo(null);
          cargarImagen (Escritorio, logo);
-            
+           
     }
     public void cargarImagen (javax.swing.JDesktopPane jDeskp, InputStream fileImage){
     try{
@@ -303,11 +303,7 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         
     }//GEN-LAST:event_txtEmpleadosActionPerformed
 
-    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
-        frmVentas llamar = new frmVentas ();
-        Escritorio.add(llamar);
-        llamar.show();
-    }//GEN-LAST:event_txtVentaActionPerformed
+                                           
 
     private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
         frmProducto llamar = new frmProducto();
@@ -330,6 +326,12 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     private void btnConf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConf1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConf1ActionPerformed
+
+    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
+        frmVentas llamar = new frmVentas ();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtVentaActionPerformed
 
     /**
      * @param args the command line arguments

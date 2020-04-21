@@ -262,17 +262,19 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPedidoActionPerformed
 
-    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
-       frmVentas llamar = new frmVentas ();
-        Escritorio.add(llamar);
-        llamar.show();
-    }//GEN-LAST:event_txtVentaActionPerformed
+                                          
 
     private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
        frmProducto llamar = new frmProducto();
         Escritorio.add(llamar);
         llamar.show();
     }//GEN-LAST:event_txtProductoActionPerformed
+
+    private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed
+      frmVentas llamar = new frmVentas();
+        Escritorio.add(llamar);
+        llamar.show();
+    }//GEN-LAST:event_txtVentaActionPerformed
 
     /**
      * @param args the command line arguments
