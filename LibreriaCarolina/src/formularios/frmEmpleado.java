@@ -44,7 +44,7 @@ DefaultTableModel model;
            Comprobar.setVisible(false);
            btnGuardar.setEnabled(false);
            btnCancelar1.setEnabled(false);
-           btnCancelar.setVisible(false);
+           
            btnModificar.setVisible(false);
            btnEliminar.setEnabled(false);
            lblID_usuario.setVisible(false);
@@ -200,7 +200,7 @@ DefaultTableModel model;
             usuario1();
             btnEliminar.setEnabled(true);
             btnModificar.setVisible(true);
-            btnCancelar.setVisible(false);
+           
              btnCancelar1.setVisible(true);
              btnCancelar1.setEnabled(true); 
             
@@ -238,6 +238,20 @@ DefaultTableModel model;
    }
        this.consultar ("");
    }
+   public void Cancelar (){
+         this.btnGuardar.setEnabled(false);
+         this.btnCancelar1.setEnabled(false);
+         this.Comprobar.setVisible(false);
+         this.btnEliminar.setEnabled(true);
+         this.txtApellido.setText("");
+         this.txtNombres.setText("");
+         this.txtID.setText("");
+         this.txtTelefono.setText("");
+         this.txtDireccion.setText("");
+         this.txtCorreo.setText("");
+         this.txtUsuario.setText("");
+         this.jTextField1.setText("");
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -264,7 +278,6 @@ DefaultTableModel model;
         txtNombres = new javax.swing.JTextField();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
-        btnCancelar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
         lblContraseña = new javax.swing.JLabel();
@@ -330,11 +343,14 @@ DefaultTableModel model;
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtApellidoKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtApellidoKeyTyped(evt);
             }
         });
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 220, -1));
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 350, -1));
 
         txtID.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -345,15 +361,23 @@ DefaultTableModel model;
                 txtIDKeyTyped(evt);
             }
         });
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 220, -1));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 350, -1));
 
         txtCorreo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txtCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoActionPerformed(evt);
+            }
+        });
         txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCorreoKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
         });
-        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 220, -1));
+        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 350, -1));
 
         txtTelefono.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -364,15 +388,18 @@ DefaultTableModel model;
                 txtTelefonoKeyTyped(evt);
             }
         });
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 220, -1));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 350, -1));
 
         txtNombres.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtNombresKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresKeyTyped(evt);
+            }
         });
-        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 220, -1));
+        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 350, -1));
 
         jTextField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -380,7 +407,7 @@ DefaultTableModel model;
                 jTextField1KeyPressed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 220, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 350, -1));
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE CARGO" }));
@@ -389,12 +416,7 @@ DefaultTableModel model;
                 jComboBox1KeyPressed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 220, -1));
-
-        btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
-        btnCancelar.setText("CANCELAR");
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, -1, -1));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, 350, -1));
 
         btnGuardar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__save.png"))); // NOI18N
@@ -410,7 +432,13 @@ DefaultTableModel model;
             }
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 172, 73));
-        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 220, -1));
+
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 350, -1));
 
         lblContraseña.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblContraseña.setText("Contraseña:");
@@ -425,7 +453,7 @@ DefaultTableModel model;
                 jPasswordField1KeyReleased(evt);
             }
         });
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 220, -1));
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 350, -1));
 
         lblDireccion.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblDireccion.setText("Dirección:");
@@ -436,7 +464,7 @@ DefaultTableModel model;
                 txtDireccionKeyPressed(evt);
             }
         });
-        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, -1));
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 350, -1));
 
         lblID_usuario.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblID_usuario.setText("jLabel1");
@@ -450,12 +478,17 @@ DefaultTableModel model;
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, 170, 70));
+        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, 170, 70));
 
         btnCancelar1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
         btnCancelar1.setText("CANCELAR");
-        jPanel1.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, -1, -1));
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 470, -1, -1));
 
         Comprobar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/userpassword_deusuari_787.png"))); // NOI18N
         Comprobar.addActionListener(new java.awt.event.ActionListener() {
@@ -463,7 +496,7 @@ DefaultTableModel model;
                 ComprobarActionPerformed(evt);
             }
         });
-        jPanel1.add(Comprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+        jPanel1.add(Comprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
@@ -526,7 +559,7 @@ DefaultTableModel model;
                         .addComponent(lblBuscarpor)
                         .addGap(41, 41, 41)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
                         .addComponent(btnEliminar)))
                 .addContainerGap())
         );
@@ -537,7 +570,7 @@ DefaultTableModel model;
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 80, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBuscarpor)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -550,20 +583,20 @@ DefaultTableModel model;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -643,6 +676,7 @@ DefaultTableModel model;
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         modificar ();
+        this.btnModificar.setVisible(false);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void ComprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprobarActionPerformed
@@ -667,6 +701,8 @@ DefaultTableModel model;
             JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
+         this.btnGuardar.setEnabled(true);
+         this.Comprobar.setVisible(false);
     }//GEN-LAST:event_ComprobarActionPerformed
 
     private void txtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyPressed
@@ -721,6 +757,11 @@ DefaultTableModel model;
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
              this.jPasswordField1.requestFocus();
         }
+        if (this.txtUsuario.getText().equals(" ") && this.jPasswordField1.getText().equals(" ")){
+                 }else {
+   this.Comprobar.setVisible(false);
+            this.Comprobar.setVisible(true);
+        }
     }//GEN-LAST:event_jPasswordField1KeyReleased
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
@@ -746,13 +787,45 @@ DefaultTableModel model;
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-      //  String Apellidos=""+this.txtApellido.setText().matches("[-\\w\\.]+@\\w+\\.\\w+");
+       char tecla = evt.getKeyChar();
+        if ((tecla < 'a' || tecla > 'z') && (tecla < 'A' || tecla > 'Z')&& (tecla!=' ') && (tecla!='ñ')&& (tecla!='Ñ')) evt.consume();
     }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void txtApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyReleased
+//        this.btnGuardar.setEnabled(true);
+        this.btnCancelar1.setEnabled(true);
+        
+    }//GEN-LAST:event_txtApellidoKeyReleased
+
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        if (this.txtUsuario.getText().equals(" ") && this.jPasswordField1.getText().equals(" ")){
+                 }else {
+   this.Comprobar.setVisible(false);
+            this.Comprobar.setVisible(true);
+        }
+    }//GEN-LAST:event_txtUsuarioKeyReleased
+
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        Cancelar ();
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
+    private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
+       char tecla = evt.getKeyChar();
+        if ((tecla < 'a' || tecla > 'z') && (tecla < 'A' || tecla > 'Z')&& (tecla!=' ') && (tecla!='ñ')&& (tecla!='Ñ')) evt.consume();
+    }//GEN-LAST:event_txtNombresKeyTyped
+
+    private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoActionPerformed
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        char tecla = evt.getKeyChar();
+        if ((tecla < 'a' || tecla > 'z') && (tecla < 'A' || tecla > 'Z') && (tecla <= '0' || tecla >= '9') && (tecla!=' ') && (tecla!='ñ')&& (tecla!='Ñ') && (tecla!='@')&& (tecla!='.')&& (tecla!='-')&& (tecla!='_')) evt.consume();
+    }//GEN-LAST:event_txtCorreoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Comprobar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
