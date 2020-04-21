@@ -124,11 +124,7 @@ public class frmLogin extends javax.swing.JFrame {
         + "satisfactoriamente al sistema", "Mensaje de bienvenida",
         JOptionPane.INFORMATION_MESSAGE);
 
-      frmLogin objeto = new frmLogin();
-      objeto.setVisible(true);
       
-        frmEntrada llamada = new frmEntrada();
-        llamada.setVisible(true);
 
       }else {
 

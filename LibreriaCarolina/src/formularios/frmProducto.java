@@ -282,6 +282,11 @@ public class frmProducto extends javax.swing.JInternalFrame {
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         JProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 51)));
         JProductos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -576,6 +581,10 @@ public class frmProducto extends javax.swing.JInternalFrame {
     private void txtpreciocompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpreciocompraKeyTyped
         
     }//GEN-LAST:event_txtpreciocompraKeyTyped
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
