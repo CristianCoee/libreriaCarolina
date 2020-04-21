@@ -269,7 +269,7 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     }//GEN-LAST:event_txtVentaActionPerformed
 
     private void txtProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProductoActionPerformed
-       frmVerificarProducto llamar = new frmVerificarProducto();
+        frmVerificarProducto llamar = new frmVerificarProducto();
         Escritorio.add(llamar);
         llamar.show();
     }//GEN-LAST:event_txtProductoActionPerformed
