@@ -146,7 +146,7 @@ public class frmLogin extends javax.swing.JFrame {
                             frmMenuAdmin llamada = new frmMenuAdmin();
                             llamada.setVisible(true);
                             }else if(num==2){
-                                JOptionPane.showMessageDialog(null, "Querid@ vendedor/a bienvenid@ al sistema de Libreria Carolina");
+                                JOptionPane.showMessageDialog(null, "Querid@ empleado bienvenid@ al sistema de Libreria Carolina");
                                 frmMenuVendedor llamada = new frmMenuVendedor();
                                 llamada.setVisible(true);
                             }
