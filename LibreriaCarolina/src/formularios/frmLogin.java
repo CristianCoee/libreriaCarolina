@@ -135,7 +135,7 @@ public class frmLogin extends javax.swing.JFrame {
                         resultado=1;
                     } if(resultado==1) {
                         int num=0;
-                        String tipo = ("Admin");
+                        String tipo = ("Gerente");
                         if(tipo.equals(usuario)){
                             num=1;
                         }else{

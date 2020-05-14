@@ -16,10 +16,26 @@ import javax.swing.JOptionPane;
  * @author linke
  */
 public class Conexion {
+ private static String us = "root";
+    private static String pas = "";
+    private static String bd = "libreria";
+    private static String url = "jdbc:mysql://localhost:3306/"+bd;
 
+    public static String getUs() {
+        return us;
+    }
+
+    public static String getPas() {
+        return pas;
+    }
+
+    public static String getBd() {
+        return bd;
+    }
     Connection Conexion = null;
 
     public Connection conexion() {
+      
         try {
             Class.forName("org.gjt.mm.mysql.Driver");//.newInstance();
             Conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/libreria", "root", "");
@@ -31,6 +47,7 @@ public class Conexion {
         } catch (ClassNotFoundException ex) {
         }
         return Conexion;
+        
     }
-
 }
+

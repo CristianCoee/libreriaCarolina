@@ -328,7 +328,9 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     }//GEN-LAST:event_btnConfActionPerformed
 
     private void btnConf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConf1ActionPerformed
-        // TODO add your handling code here:
+        frmBackup llamar = new frmBackup ();
+        Escritorio.add(llamar);
+        llamar.show();
     }//GEN-LAST:event_btnConf1ActionPerformed
 
     /**

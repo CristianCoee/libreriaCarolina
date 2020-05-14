@@ -7,11 +7,15 @@ package formularios;
 
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -44,7 +48,7 @@ DefaultTableModel model;
            Comprobar.setVisible(false);
            btnGuardar.setEnabled(false);
            btnCancelar1.setEnabled(false);
-           
+           this.jTextField1.setVisible(false);
            btnModificar.setVisible(false);
            btnEliminar.setEnabled(false);
            lblID_usuario.setVisible(false);
@@ -186,23 +190,32 @@ DefaultTableModel model;
         }
    }
    public void seleccionar (){
+          
+      this.fecha.setVisible(false);
+      this.jTextField1.setVisible(true);
        int fila = this.jTable1.getSelectedRow();
        if (fila>=0){
+            
            this.txtID.setText(this.jTable1.getValueAt(fila, 0).toString());
             this.txtNombres.setText(this.jTable1.getValueAt(fila, 1).toString());
             this.txtApellido.setText(this.jTable1.getValueAt(fila, 2).toString());
-            this.jTextField1.setText(this.jTable1.getValueAt(fila, 3).toString());
             this.txtDireccion.setText(this.jTable1.getValueAt(fila, 4).toString());
             this.txtCorreo.setText(this.jTable1.getValueAt(fila, 5).toString());
             this.txtTelefono.setText(this.jTable1.getValueAt(fila, 6).toString());
             this.jComboBox1.setSelectedItem(this.jTable1.getValueAt(fila, 7).toString());
             this.txtUsuario.setText(this.jTable1.getValueAt(fila, 8).toString());
+            this.jTextField1.setText(this.jTable1.getValueAt(fila, 3).toString());
+            
+            
+                 //.toString(this.jTable1.getValueAt(fila, 3));
+            
             usuario1();
             btnEliminar.setEnabled(true);
             btnModificar.setVisible(true);
            
              btnCancelar1.setVisible(true);
              btnCancelar1.setEnabled(true); 
+             
             
        }else {
            JOptionPane.showMessageDialog(null, "Seleccione fila");
@@ -212,7 +225,10 @@ DefaultTableModel model;
        try {
         //  String query = "UPDATE empleados SET apellidos = '"+this.txtApellido.getText()+"' , nombres = '"+this.txtNombres.getText()+"' , correo = '"+this.txtCorreo.getText()+
         //          "', direccion = '"+this.txtDireccion.getText()+"' , fecha_nac = '"+this.jTextField1.getText()+"' , telefono = '"+this.txtTelefono.getText()+"' where id_empleado = '" +this.txtID.getText()+"'";
-         
+     /*    String dia = Integer.toString(fecha.getCalendar().get(Calendar.DAY_OF_MONTH));
+            String mes = Integer.toString(fecha.getCalendar().get(Calendar.MONTH) + 1);
+            String year = Integer.toString(fecha.getCalendar().get(Calendar.YEAR));
+            String fecha = (year + "-" + mes+ "-" + dia);*/
         String query = "UPDATE empleados SET apellidos = ? , nombres = ? , correo = ? , direccion = ? , fecha_nac = ? , telefono = ?, id_cargo = ?, id_rol =? "
                
                 + "where id_empleado = ?";
@@ -250,7 +266,7 @@ DefaultTableModel model;
          this.txtDireccion.setText("");
          this.txtCorreo.setText("");
          this.txtUsuario.setText("");
-         this.jTextField1.setText("");
+              this.fecha.setCalendar(null);
    }
    public void Limpiar (){
        this.txtApellido.setText("");
@@ -261,7 +277,7 @@ DefaultTableModel model;
        this.txtTelefono.setText("");
        this.jPasswordField1.setText("");
        this.jComboBox1.setSelectedIndex(0);
-       this.jTextField1.setText("");
+       this.fecha.setCalendar(null);
        this.txtUsuario.setText("");
        this.lblID_usuario.setText(" ");
        this.lblID_usuario.setVisible(false);
@@ -291,7 +307,6 @@ DefaultTableModel model;
         txtCorreo = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
         txtNombres = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JButton();
         txtUsuario = new javax.swing.JTextField();
@@ -303,6 +318,8 @@ DefaultTableModel model;
         btnModificar = new javax.swing.JButton();
         btnCancelar1 = new javax.swing.JButton();
         Comprobar = new javax.swing.JButton();
+        fecha = new com.toedter.calendar.JDateChooser();
+        jTextField1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         lblBuscarpor = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -416,14 +433,6 @@ DefaultTableModel model;
         });
         jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 350, -1));
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextField1KeyPressed(evt);
-            }
-        });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 350, -1));
-
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE CARGO" }));
         jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -512,6 +521,10 @@ DefaultTableModel model;
             }
         });
         jPanel1.add(Comprobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, -1, -1));
+
+        fecha.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 250, 180, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 160, -1));
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
@@ -621,6 +634,11 @@ DefaultTableModel model;
         
         try
         {
+            String dia = Integer.toString(fecha.getCalendar().get(Calendar.DAY_OF_MONTH));
+            String mes = Integer.toString(fecha.getCalendar().get(Calendar.MONTH) + 1);
+            String year = Integer.toString(fecha.getCalendar().get(Calendar.YEAR));
+            String fecha = (year + "-" + mes+ "-" + dia);
+            //String fechas.setText(fecha);
             
              String query1= "insert into empleados (id_empleado, nombres, apellidos, telefono, direccion, correo, fecha_nac, id_cargo, id_rol) "
                     + "values (?,?,?,?,?,?,?,?,?)";
@@ -633,7 +651,7 @@ DefaultTableModel model;
             pst.setString(4, this.txtTelefono.getText().trim());
             pst.setString(5, this.txtDireccion.getText().trim());
             pst.setString(6, this.txtCorreo.getText().trim());
-            pst.setString(7, this.jTextField1.getText().trim());
+            pst.setString(7, fecha);
             pst.setString(8, ""+this.jComboBox1.getSelectedIndex());
             pst.setString(9, this.lblID_usuario.getText().trim());
              pst.executeUpdate();
@@ -756,15 +774,9 @@ DefaultTableModel model;
 
     private void txtDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-             this.jTextField1.requestFocus();
+           //  this.jTextField1.requestFocus();
         }
     }//GEN-LAST:event_txtDireccionKeyPressed
-
-    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-      if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-             this.jComboBox1.requestFocus();
-        }
-    }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
@@ -825,6 +837,9 @@ DefaultTableModel model;
     }//GEN-LAST:event_txtUsuarioKeyReleased
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        this.btnModificar.setVisible(false);
+        this.fecha.setVisible(true);
+        this.jTextField1.setVisible(false);
         Cancelar ();
        
     }//GEN-LAST:event_btnCancelar1ActionPerformed
@@ -850,6 +865,7 @@ DefaultTableModel model;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
+    private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
