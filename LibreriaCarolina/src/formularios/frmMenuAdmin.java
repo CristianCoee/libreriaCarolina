@@ -290,7 +290,7 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void txtPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPedidoActionPerformed
-        frmCompra llamar = new frmCompra ();
+        frmPedido llamar = new frmPedido();
         Escritorio.add(llamar);
         llamar.show();
     }//GEN-LAST:event_txtPedidoActionPerformed
@@ -298,9 +298,7 @@ public InputStream logo= this.getClass().getResourceAsStream("/Imagenes/fondo1.j
     private void txtEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpleadosActionPerformed
         frmEmpleado llamar = new frmEmpleado ();
         Escritorio.add(llamar);
-        llamar.show();
-        
-        
+        llamar.show();  
     }//GEN-LAST:event_txtEmpleadosActionPerformed
 
     private void txtVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVentaActionPerformed

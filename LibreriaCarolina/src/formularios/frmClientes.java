@@ -4,18 +4,19 @@
  * and open the template in the editor.
  */
 package formularios;
-import java.awt.event.KeyEvent;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import libreriacarolina.Conexion;
+//import libreriacarolina.Conexion;
+//import java.awt.event.KeyEvent;
+//import java.sql.PreparedStatement;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import java.sql.SQLException;
 
 /**
  *
@@ -24,22 +25,19 @@ import libreriacarolina.Conexion;
 public class frmClientes extends javax.swing.JInternalFrame {
     Connection conn ;
     DefaultTableModel model;
+    
     /**
      * Creates new form frmClientes
      */
     public frmClientes() {
         initComponents();
-     
         try
         {
               Class.forName("org.gjt.mm.mysql.Driver") ;
               conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","") ;
-              System.out.println("CONEXION EXITOSA");
+              //System.out.println("Conexion en CLIENTES");
         }
         catch(Exception e) {}
-    }
-
-    private void consultar(String valor){
     }
     
     /**
@@ -57,8 +55,9 @@ public class frmClientes extends javax.swing.JInternalFrame {
         tblClientes = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        btnBuscart = new javax.swing.JButton();
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +65,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        lblCodigo.setText("Codigo de Cliente ");
+        lblCodigo.setText("Codigo, Nombre o Apellido");
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,7 +75,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Codigo", "Apellido", "Nombre", "nre"
+                "Codigo", "Apellido", "Nombre", "NRE"
             }
         ));
         jScrollPane2.setViewportView(tblClientes);
@@ -87,10 +86,11 @@ public class frmClientes extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Mostrar todos los clientes ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/preview.png"))); // NOI18N
+        btnBuscart.setText("Mostrar todos los clientes ");
+        btnBuscart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscartActionPerformed(evt);
             }
         });
 
@@ -99,24 +99,22 @@ public class frmClientes extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jSeparator1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCodigo)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnBuscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(93, Short.MAX_VALUE))))
+                        .addComponent(lblCodigo)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(btnBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscart)))
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,14 +122,15 @@ public class frmClientes extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblCodigo)
+                        .addComponent(btnBuscar)
+                        .addComponent(btnBuscart)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -139,56 +138,72 @@ public class frmClientes extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        int codigo = Integer.parseInt(txtBuscar.getText());
-        String query ="";    
-        query="Select * from clientes where id_cliente ='"+codigo+"'";
+        String data = txtBuscar.getText();
+        String sql = "";    
         try {
+            sql="SELECT * FROM clientes WHERE id_cliente ='"+data+"' OR apellidos ='"+data+"' OR nombres ='"+data+"' OR nre ='"+data+"'";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query) ;
+            ResultSet rs = stmt.executeQuery(sql) ;
             model = (DefaultTableModel) this.tblClientes.getModel();
             model.setRowCount(0);
-            Object Datos[]= new Object[4];
+            Object Datos[] = new Object[4];
                 while (rs.next()){
                     for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
                         model.addRow(Datos);
                 }
                 this.tblClientes.setModel(model);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
         }
+        txtBuscar.setText("");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String query = "";    
-        query = "Select * from clientes";
+        String data = txtBuscar.getText();
+        String sql = "";    
         try {
+            sql="SELECT * FROM clientes WHERE id_cliente LIKE '%"+data+"%' OR apellidos LIKE '%"+data+"%' OR nombres LIKE '%"+data+"%' OR nre LIKE '%"+data+"%'";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query) ;
+            ResultSet rs = stmt.executeQuery(sql) ;
             model = (DefaultTableModel) this.tblClientes.getModel();
             model.setRowCount(0);
-            Object Datos[]= new Object[4];
+            Object Datos[] = new Object[4];
                 while (rs.next()){
                     for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
                         model.addRow(Datos);
                 }
                 this.tblClientes.setModel(model);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void btnBuscartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscartActionPerformed
+        // TODO add your handling code here:
+        String sql = "";    
+        try {
+            sql = "SELECT * FROM clientes";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql) ;
+            model = (DefaultTableModel) this.tblClientes.getModel();
+            model.setRowCount(0);
+            Object Datos[] = new Object[4];
+                while (rs.next()){
+                    for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
+                        model.addRow(Datos);
+                }
+                this.tblClientes.setModel(model);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBuscartActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscart;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCodigo;

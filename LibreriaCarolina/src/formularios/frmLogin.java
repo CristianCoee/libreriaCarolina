@@ -7,25 +7,23 @@ package formularios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import libreriacarolina.Conexion;
+
 /**
  *
  * @author linke
  */
 public class frmLogin extends javax.swing.JFrame {
-    
-     Connection conn ;
+    Connection conn;
     
     /**
      * Creates new form frmLogin
      */
     public frmLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     /**
@@ -121,41 +119,35 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String usuario = txtNombre.getText();
-        String clave = String.valueOf(pwdContra.getPassword());
-        int resultado=0;
-        String sql="select * from roles where usuario='"+usuario+"' and clave=('"+clave+"')";
+        String user = txtNombre.getText();
+        String pass = String.valueOf(pwdContra.getPassword());
+        int type_user = 0;
             try {
-                Class.forName("org.gjt.mm.mysql.Driver") ;
-                conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","") ;
-                System.out.println("CONEXION EXITOSA");
+                Class.forName("org.gjt.mm.mysql.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria", "root", "");
+                //System.out.println("Conexion en LOGIN");
+                String sql = "SELECT id_rol, usuario, clave FROM roles WHERE usuario='"+user+"' AND clave='"+pass+"'";
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
-                    if(rs.next()){
-                        resultado=1;
-                    } if(resultado==1) {
-                        int num=0;
-                        String tipo = ("Gerente");
-                        if(tipo.equals(usuario)){
-                            num=1;
-                        }else{
-                        num=2;
-                        }
-                        if(num==1){
-                            JOptionPane.showMessageDialog(null, "Estimado administrador@ bienvenid@ al sistema de Libreria Carolina");
+                    if(rs.next()) {
+                        String user_DB = rs.getString("usuario");
+                        type_user = rs.getInt("id_rol");
+                        if(type_user == 1) {
+                            JOptionPane.showMessageDialog(null, "Bienvenid@ ADMIN "+user_DB+"", " Sistema Libreria Carolina", JOptionPane.INFORMATION_MESSAGE);
                             frmMenuAdmin llamada = new frmMenuAdmin();
                             llamada.setVisible(true);
-                            }else if(num==2){
-                                JOptionPane.showMessageDialog(null, "Querid@ empleado bienvenid@ al sistema de Libreria Carolina");
-                                frmMenuVendedor llamada = new frmMenuVendedor();
-                                llamada.setVisible(true);
-                            }
-                    }else {
-                        JOptionPane.showMessageDialog(null, "Acceso denegado, verique su usuario o contraseña");
+                            this.dispose();
+                        } else if(type_user >= 2) {
+                            JOptionPane.showMessageDialog(null, "Bienvenid@ "+user_DB+"", " Sistema Libreria Carolina", JOptionPane.INFORMATION_MESSAGE);
+                            frmMenuVendedor llamada = new frmMenuVendedor();
+                            llamada.setVisible(true);
+                            this.dispose();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Nombre de Usuario y Contraseña no coinciden", " ¡¡ Acceso Denegado !!", JOptionPane.ERROR_MESSAGE);
                     }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Ha ocurrido un error: "+e.toString(),
-                "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
             }
     }//GEN-LAST:event_jButton1ActionPerformed
 

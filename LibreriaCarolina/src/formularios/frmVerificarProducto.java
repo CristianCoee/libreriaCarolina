@@ -4,18 +4,19 @@
  * and open the template in the editor.
  */
 package formularios;
-import java.awt.event.KeyEvent;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import libreriacarolina.Conexion;
+//import libreriacarolina.Conexion;
+//import java.awt.event.KeyEvent;
+//import java.sql.PreparedStatement;
+//import java.sql.SQLException;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +25,7 @@ import libreriacarolina.Conexion;
 public class frmVerificarProducto extends javax.swing.JInternalFrame {
     Connection conn ;
     DefaultTableModel model;
+    
     /**
      * Creates new form frmVerificarProducto
      */
@@ -32,7 +34,7 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
         try {
               Class.forName("org.gjt.mm.mysql.Driver") ;
               conn = DriverManager.getConnection("jdbc:mysql://localhost/libreria","root","") ;
-              System.out.println("CONEXION EXITOSA");
+              //System.out.println("Conexion en vPRODUCTOS");
         }
         catch(Exception e) {
         }
@@ -53,14 +55,14 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        btnBuscart = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProducto = new javax.swing.JTable();
-        txtCodigo = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnProducto = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,7 +79,7 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Verificar producto en inventario antes de su compra");
 
-        jLabel6.setText("Buscar por");
+        jLabel6.setText("Buscar por:");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
@@ -87,11 +89,11 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/preview.png"))); // NOI18N
-        btnLimpiar.setText("Mostrar todos los productos");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/preview.png"))); // NOI18N
+        btnBuscart.setText("Mostrar todos los productos");
+        btnBuscart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnBuscartActionPerformed(evt);
             }
         });
 
@@ -110,13 +112,19 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(tblProducto);
 
-        jLabel2.setText("Codigo");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__open.png"))); // NOI18N
-        jButton1.setText("Agregar producto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                txtBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Codigo, Nombre o Precio");
+
+        btnProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__open.png"))); // NOI18N
+        btnProducto.setText("Agregar producto");
+        btnProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductoActionPerformed(evt);
             }
         });
 
@@ -128,36 +136,32 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator2)
-                            .addComponent(jSeparator3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnProducto)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
+                                .addComponent(jSeparator3)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel6)
-                                        .addGap(658, 658, 658))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(btnLimpiar)
-                                        .addGap(42, 42, 42))))
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel7))))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(25, 25, 25)
+                                            .addComponent(jLabel2)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(57, 57, 57)
+                                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnBuscart))))
+                                .addComponent(jLabel1)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(19, 19, 19)
+                                    .addComponent(jLabel7)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(21, 21, 21))
+                        .addGap(72, 72, 72)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,26 +170,26 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnLimpiar)
-                            .addComponent(btnBuscar)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnBuscart)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -193,34 +197,33 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String codigo = txtCodigo.getText();
-        String query ="";    
-        query="Select producto, existencia, precio_venta, num_lote from productos where id_producto ='"+codigo+"'";
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query) ;
-            model = (DefaultTableModel) this.tblProducto.getModel();
-            model.setRowCount(0);
-            Object Datos[]= new Object[4];
-                while (rs.next()){
-                    for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
-                        model.addRow(Datos);
-                }
-                this.tblProducto.setModel(model);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        txtCodigo.setText("");
+            String data = txtBuscar.getText();
+            String sql ="";    
+            try {
+                sql="SELECT producto, existencia, precio_venta, num_lote FROM productos WHERE id_producto ='"+data+"' OR producto ='"+data+"' OR precio_venta ='"+data+"'";
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql) ;
+                model = (DefaultTableModel) this.tblProducto.getModel();
+                model.setRowCount(0);
+                Object Datos[]= new Object[4];
+                    while (rs.next()){
+                        for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
+                            model.addRow(Datos);
+                    }
+                    this.tblProducto.setModel(model);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
+            }
+        txtBuscar.setText("");
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    private void btnBuscartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscartActionPerformed
         // TODO add your handling code here:
-        String query = "";    
-        query = "Select producto, existencia, precio_venta, num_lote from Productos";
+        String sql = "";    
         try {
+            sql = "SELECT producto, existencia, precio_venta, num_lote FROM Productos";
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query) ;
+            ResultSet rs = stmt.executeQuery(sql) ;
             model = (DefaultTableModel) this.tblProducto.getModel();
             model.setRowCount(0);
             Object Datos[]= new Object[4];
@@ -230,22 +233,43 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
                 }
                 this.tblProducto.setModel(model);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null,"HA OCURRIDO UN ERROR: "+e.toString(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnBuscartActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         // TODO add your handling code here:
         frmProducto llamada = new frmProducto();
-        llamada.setVisible(true);                      
-    }//GEN-LAST:event_jButton1ActionPerformed
+        llamada.setVisible(true);
+        llamada.show();
+    }//GEN-LAST:event_btnProductoActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+        String data = txtBuscar.getText();
+        String sql ="";    
+        try {
+            sql="SELECT producto, existencia, precio_venta, num_lote FROM productos WHERE id_producto LIKE '%"+data+"%' OR producto LIKE '%"+data+"%' OR precio_venta LIKE '%"+data+"%'";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql) ;
+            model = (DefaultTableModel) this.tblProducto.getModel();
+            model.setRowCount(0);
+            Object Datos[]= new Object[4];
+                while (rs.next()){
+                    for (int i=0;i<4;i++) Datos[i]=rs.getObject(i+1);
+                        model.addRow(Datos);
+                }
+                this.tblProducto.setModel(model);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error: "+e.toString(), " ¡¡ ERROR !!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnLimpiar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscart;
+    private javax.swing.JButton btnProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
@@ -256,6 +280,6 @@ public class frmVerificarProducto extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tblProducto;
-    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
