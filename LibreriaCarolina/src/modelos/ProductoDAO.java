@@ -27,10 +27,13 @@ public class ProductoDAO {
     
     
     
+    
     public Producto listarID(int id){
+              
         
         Producto p =new Producto();
         String sql= "select * from producto where id_producto=?";
+        
         try {
             conn=acceso.conexion();
             ps=conn.prepareStatement(sql);
