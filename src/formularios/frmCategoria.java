@@ -279,7 +279,7 @@ public class frmCategoria extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "ERROR!...");
+            JOptionPane.showMessageDialog(null, "ERROR! AL GUARDAR...");
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
 
