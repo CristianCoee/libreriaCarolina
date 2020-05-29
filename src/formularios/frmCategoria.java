@@ -7,11 +7,14 @@ package formularios;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import libreriacarolina.Conexion;
 
 /**
@@ -29,11 +32,50 @@ public class frmCategoria extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-   void Limpiar() {
+    void Limpiar() {
         txtcodcategoria.setText("");
         txtnombrecategoria.setText("");
-       
+
     }
+
+    void Recargar() {
+
+        try {
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            JProductos.setModel(modelo);
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            String sql = "SELECT * FROM Productos";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
+            int cantidadColumnas = rsMd.getColumnCount();
+
+            modelo.addColumn("id_producto");
+            modelo.addColumn("id_categoria");
+            modelo.addColumn("producto");
+            modelo.addColumn("precio_compra");
+            modelo.addColumn("precio_venta");
+            modelo.addColumn("exitencia");
+            modelo.addColumn("num_lote");
+
+            while (rs.next()) {
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -51,7 +93,7 @@ public class frmCategoria extends javax.swing.JInternalFrame {
         txtbuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        JProductos = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         txtNuevoEmpleado1 = new javax.swing.JLabel();
@@ -59,7 +101,7 @@ public class frmCategoria extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Categoria");
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -69,22 +111,22 @@ public class frmCategoria extends javax.swing.JInternalFrame {
 
         lblApellidos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblApellidos.setText("Codigo Categoria:");
-        jPanel1.add(lblApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
+        jPanel1.add(lblApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
         lblNombre.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblNombre.setText("Nombre Categoria:");
-        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, 20));
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
 
         txtcodcategoria.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jPanel1.add(txtcodcategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 230, -1));
+        jPanel1.add(txtcodcategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 260, -1));
 
         txtnombrecategoria.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel1.add(txtnombrecategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 220, -1));
+        jPanel1.add(txtnombrecategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 260, -1));
 
         btnCancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancel_stop_exit_1583.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 173, -1, 80));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, 80));
 
         btnAñadir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/_active__save.png"))); // NOI18N
@@ -94,22 +136,22 @@ public class frmCategoria extends javax.swing.JInternalFrame {
                 btnAñadirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 173, 172, 80));
+        jPanel1.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 172, 80));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 51)));
         jPanel2.setForeground(new java.awt.Color(255, 255, 51));
 
         lblbuscarproducto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblbuscarproducto.setText("Codigo Cayegoria: ");
+        lblbuscarproducto.setText("Codigo Categoria: ");
 
         btnBuscar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btnBuscar.setText("BUSCAR");
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 51)));
-        jTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        JProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 51)));
+        JProductos.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        JProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -128,7 +170,7 @@ public class frmCategoria extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(JProductos);
 
         btnModificar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
@@ -146,6 +188,10 @@ public class frmCategoria extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(294, 294, 294)
+                .addComponent(txtNuevoEmpleado1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
@@ -153,28 +199,24 @@ public class frmCategoria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar)
-                        .addGap(3, 3, 3)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txtNuevoEmpleado1)
-                .addGap(264, 264, 264))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+                        .addGap(3, 3, 3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(39, 39, 39)
                 .addComponent(txtNuevoEmpleado1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblbuscarproducto)
                     .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,7 +237,7 @@ public class frmCategoria extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -203,12 +245,10 @@ public class frmCategoria extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,32 +256,42 @@ public class frmCategoria extends javax.swing.JInternalFrame {
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
 
-      String codcategoria, nomcategoria;
+        DefaultTableModel modelo = new DefaultTableModel();
+        JProductos.setModel(modelo);
+        String codcategoria, nomcategoria;
         String sql = "";
         codcategoria = this.txtcodcategoria.getText();
         nomcategoria = this.txtnombrecategoria.getText();
-        
-        
+
         //Consulta para ingresar los datos en la base de datos...
-        sql = "INSERT INTO Categorias (id_categoria, categoria) VALUES (?, ?)";
+        sql = "INSERT INTO Categoria (id_categoria, categoria) VALUES (?, ?)";
         try {
+            Conexion BD = new Conexion();
+            conn = BD.conexion();
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, codcategoria);
-            pst.setString(2, nomcategoria);
-          
-            int registro = pst.executeUpdate();
+            pst.setString(2, codcategoria);
 
+            int registro = pst.executeUpdate();
+            //Si el registro se guarda correctamente executeUpdate aumenta a uno confirmando al usuario que si se guardaron los datos...
             if (registro > 0) {
-                JOptionPane.showInputDialog(null, "REGISTRO INGRESADO CON EXITO...");
+
+                JOptionPane.showMessageDialog(null, "REGISTRO INGRESADO CON EXITO...");
+                Recargar();
                 Limpiar();
+
             }
+
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR!...");
             Logger.getLogger(frmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btnAñadirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable JProductos;
     private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
@@ -250,7 +300,6 @@ public class frmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblbuscarproducto;
