@@ -55,9 +55,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
         obtenerFecha();
         obtenerIdVenta();
         filtrarClientes();
-    
-        
-        // txtFecha.setText(String.valueOf(fechaHoy.getYear()));
+    txtEmpleado.setText("Jose Calderon");
           
     }
         
@@ -579,7 +577,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
      textoCompleter.addItem("Carlos Ramirez");
      textoCompleter.addItem("Marcela Robles");
      textoCompleter.addItem("Manuel Valladares");
-     
+     textoCompleter.addItem("Clientes Varios");
     }
     
     
@@ -738,11 +736,19 @@ public class frmVentas extends javax.swing.JInternalFrame {
     }
    
      public void GuardarDetalle() {
+         String desc="";
+         if (cmbTipoPrecio.getSelectedIndex() == 0) {
+            desc = "0.05";
+        } else {
+            desc ="0.20";
+        }
+         
+         
              try
         {
             
-             String query1= "insert into detalle_ventas (id_venta,id_producto, cantidad, precio_uni ,num_factura) "
-                    + "values (?,?,?,?,?)";
+             String query1= "insert into detalle_ventas (id_venta,id_producto, cantidad, precio_uni ,num_factura, descuento) "
+                    + "values (?,?,?,?,?,?)";
 
             PreparedStatement pst = conn.prepareStatement(query1);
 
@@ -751,6 +757,7 @@ public class frmVentas extends javax.swing.JInternalFrame {
             pst.setString(3, spinCantidad.getValue().toString());
             pst.setString(4, txtPrecio.getText());
             pst.setString(5, txtNFactura.getText());
+            pst.setString(6, desc);
             
              pst.executeUpdate();
                        
@@ -772,14 +779,17 @@ public class frmVentas extends javax.swing.JInternalFrame {
          
          try {
 
-            String query1 = "insert into ventas (id_cliente, id_empleado, fecha_venta) "
-                    + "values (?,?,?)";
+            String query1 = "insert into ventas (id_cliente, id_empleado, fecha_venta,subtotal_venta, iva_venta, total_venta) "
+                    + "values (?,?,?,?,?,?)";
 
             PreparedStatement pst = conn.prepareStatement(query1);
 
-            pst.setString(1, txtCliente.getText());
-            pst.setString(2, txtEmpleado.getText());
+            pst.setString(1, "1");
+            pst.setString(2, "2");
             pst.setString(3, txtFecha.getText());
+            pst.setString(4, lblSubTotal.getText());
+            pst.setString(5, lblIva.getText());
+            pst.setString(6, lblTotalFactura.getText());
 
             pst.executeUpdate();
             
@@ -841,7 +851,9 @@ public class frmVentas extends javax.swing.JInternalFrame {
      txtProducto.setText("");
      txtPrecio.setText("");
      txtNFactura.setText("");
-     
+     lblSubTotal.setText("");
+     lblIva.setText("");
+     lblTotalFactura.setText("");
      }
      
 
