@@ -122,8 +122,8 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         }
 
     }
-    
-     public void keyTypedNum2(KeyEvent ke) {
+
+    public void keyTypedNum2(KeyEvent ke) {
         char c = ke.getKeyChar();
         if (Character.isLetter(c)) {
             getToolkit().beep();
@@ -133,8 +133,8 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         }
 
     }
-     
-      public void keyTyped(KeyEvent ke) {
+
+    public void keyTyped(KeyEvent ke) {
         char c = ke.getKeyChar();
         if (Character.isDigit(c)) {
             getToolkit().beep();
@@ -142,9 +142,6 @@ public class frmProveedor extends javax.swing.JInternalFrame {
             lblpro.setText("Ingresar solo letras");
         }
     }
-     
-       
-       
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -429,6 +426,7 @@ public class frmProveedor extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnModificar.setEnabled(false);
         txtcodproveedor.setEditable(true);
+        txtbuscar.setText("");
         lblcod.setText("");
         lblpro.setText("");
         lbltele.setText("");
