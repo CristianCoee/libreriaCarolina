@@ -48,20 +48,16 @@ public class frmCategoria extends javax.swing.JInternalFrame {
             PreparedStatement ps = null;
             ResultSet rs = null;
 
-            String sql = "SELECT * FROM Productos";
+            String sql = "SELECT * FROM Categorias";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
 
             ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
             int cantidadColumnas = rsMd.getColumnCount();
 
-            modelo.addColumn("id_producto");
             modelo.addColumn("id_categoria");
-            modelo.addColumn("producto");
-            modelo.addColumn("precio_compra");
-            modelo.addColumn("precio_venta");
-            modelo.addColumn("exitencia");
-            modelo.addColumn("num_lote");
+            modelo.addColumn("categoria");
+            
 
             while (rs.next()) {
                 Object[] filas = new Object[cantidadColumnas];
